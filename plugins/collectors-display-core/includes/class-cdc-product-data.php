@@ -18,7 +18,7 @@ class CDC_Product_Data {
 	 * Hook into the single product page.
 	 */
 	public static function init() {
-		add_action( 'woocommerce_single_product_summary', array( __CLASS__, 'demo_disclaimer' ), 8 );
+		add_action( 'astra_woo_single_short_description_after', array( __CLASS__, 'demo_disclaimer' ), 5 );
 		add_filter( 'woocommerce_product_tabs', array( __CLASS__, 'specs_tab' ) );
 	}
 

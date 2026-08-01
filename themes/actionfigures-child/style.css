@@ -340,6 +340,8 @@ select:focus-visible {
 	inset: 0;
 	z-index: 100;
 	pointer-events: none;
+	visibility: hidden;
+	transition: visibility 0s linear 260ms;
 }
 
 .cdc-drawer-backdrop {
@@ -365,6 +367,8 @@ select:focus-visible {
 
 .cdc-drawer.open {
 	pointer-events: auto;
+	visibility: visible;
+	transition-delay: 0s;
 }
 
 .cdc-drawer.open .cdc-drawer-backdrop {
@@ -2437,6 +2441,13 @@ html.cdc-anim [data-cdc-reveal="slide-left"] {
 .cdc-gallery-tile:hover .cdc-gallery-overlay {
 	opacity: 1;
 	transform: none;
+}
+
+@media (hover: none) {
+	.cdc-gallery-overlay {
+		opacity: 1;
+		transform: none;
+	}
 }
 
 .cdc-gallery-cat {

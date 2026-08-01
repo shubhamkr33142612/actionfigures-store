@@ -105,10 +105,11 @@ $cdc_account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_perm
 					<span></span><span></span><span></span>
 				</button>
 			</div>
+			<span id="cdc-wl-live" class="screen-reader-text" aria-live="polite"></span>
 		</div>
 	</header>
 
-	<div class="cdc-drawer" id="cdc-drawer">
+	<div class="cdc-drawer" id="cdc-drawer" aria-hidden="true">
 		<div class="cdc-drawer-backdrop" id="cdc-drawer-backdrop"></div>
 		<div class="cdc-drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
 			<div class="cdc-drawer-head">
