@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ACF_CHILD_VERSION', '1.0.6' );
+define( 'ACF_CHILD_VERSION', '1.0.7' );
 
 /**
  * Enqueue fonts and the child stylesheet after Astra's.
@@ -36,6 +36,21 @@ function actionfigures_child_enqueue_styles() {
 		array(),
 		ACF_CHILD_VERSION,
 		true
+	);
+	wp_localize_script(
+		'actionfigures-child',
+		'cdcThemeI18n',
+		array(
+			'addWishlist'    => __( 'Add %s to wishlist', 'actionfigures-child' ),
+			'removeWishlist' => __( 'Remove %s from wishlist', 'actionfigures-child' ),
+			'saveWishlist'   => __( 'Save to wishlist', 'actionfigures-child' ),
+			'removeSaved'    => __( 'Remove from wishlist', 'actionfigures-child' ),
+			'added'          => __( 'Added to wishlist', 'actionfigures-child' ),
+			'removed'        => __( 'Removed from wishlist', 'actionfigures-child' ),
+			'emptyTitle'     => __( 'Your wishlist is empty.', 'actionfigures-child' ),
+			'emptySub'       => __( 'Save your favourite displays and revisit them anytime.', 'actionfigures-child' ),
+			'browse'         => __( 'Browse the collection', 'actionfigures-child' ),
+		)
 	);
 }
 add_action( 'wp_enqueue_scripts', 'actionfigures_child_enqueue_styles', 20 );
@@ -101,17 +116,29 @@ function actionfigures_child_head_meta() {
 		if ( ! $url ) {
 			$url = home_url( add_query_arg( array() ) );
 		}
-		$type = 'website';
+		$type = is_product() ? 'product' : 'website';
 	}
 
-	$excerpt = wp_html_excerpt( $description, 160 );
+	$excerpt    = wp_html_excerpt( $description, 160 );
+	$image_url  = '';
+	$image_alt  = '';
+	$image_id   = is_singular() ? get_post_thumbnail_id() : 0;
+	if ( $image_id ) {
+		$image_url = wp_get_attachment_image_url( $image_id, 'medium_large' );
+		$image_alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+	}
 
 	echo '<meta name="description" content="' . esc_attr( $excerpt ) . '" />' . "\n";
 	echo '<meta property="og:type" content="' . esc_attr( $type ) . '" />' . "\n";
+	echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '" />' . "\n";
 	echo '<meta property="og:title" content="' . esc_attr( $title ) . '" />' . "\n";
 	echo '<meta property="og:description" content="' . esc_attr( $excerpt ) . '" />' . "\n";
 	echo '<meta property="og:url" content="' . esc_url( $url ) . '" />' . "\n";
-	echo '<meta name="twitter:card" content="summary" />' . "\n";
+	if ( $image_url ) {
+		echo '<meta property="og:image" content="' . esc_url( $image_url ) . '" />' . "\n";
+		echo '<meta property="og:image:alt" content="' . esc_attr( $image_alt ? $image_alt : $title ) . '" />' . "\n";
+	}
+	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
 }
 	add_action( 'wp_head', 'actionfigures_child_head_meta', 5 );
 

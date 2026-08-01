@@ -1027,6 +1027,10 @@ select:focus-visible {
 	gap: 10px;
 }
 
+.cdc-chip-grid.center {
+	justify-content: center;
+}
+
 .cdc-chip {
 	display: inline-flex;
 	align-items: center;

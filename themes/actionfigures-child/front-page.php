@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+?>
+<main id="cdc-main" class="cdc-main">
+<?php
 $cdc_featured = wc_get_products(
 	array(
 		'featured' => true,
@@ -320,7 +323,7 @@ foreach ( $cdc_marquee as $cdc_marquee_item ) {
 				<h2>One display, many collectibles</h2>
 				<p class="cdc-section-sub">Pick your collectible type to see compatible products.</p>
 			</div>
-			<div class="cdc-chip-grid" style="justify-content: center;">
+			<div class="cdc-chip-grid center">
 				<?php
 				$types = get_terms(
 					array(
@@ -412,5 +415,7 @@ foreach ( $cdc_marquee as $cdc_marquee_item ) {
 	</section>
 
 </div>
+
+</main>
 
 <?php get_footer(); ?>

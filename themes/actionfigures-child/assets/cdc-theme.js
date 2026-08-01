@@ -285,8 +285,9 @@
 		var start = null;
 
 		function format(v) {
+			var locale = docEl.lang || 'en-IN';
 			return (
-				v.toLocaleString('en-IN', {
+				v.toLocaleString(locale, {
 					minimumFractionDigits: decimals,
 					maximumFractionDigits: decimals
 				}) + suffix
@@ -445,12 +446,23 @@
 		} catch (e) {}
 	}
 
+	var i18n = window.cdcThemeI18n || {};
+	function wlI18n(key, fallback) {
+		return i18n[key] || fallback;
+	}
+
+	function wlFmt(fmt, name) {
+		return fmt.indexOf('%s') > -1 ? fmt.replace('%s', name) : fmt;
+	}
+
 	function wlLabel(btn, on) {
 		var name = btn.getAttribute('data-name');
 		if (btn.classList.contains('cdc-wishlist-btn--single')) {
-			return on ? 'Remove from wishlist' : 'Save to wishlist';
+			return on ? wlI18n('removeSaved', 'Remove from wishlist') : wlI18n('saveWishlist', 'Save to wishlist');
 		}
-		return on ? 'Remove ' + name + ' from wishlist' : 'Add ' + name + ' to wishlist';
+		return on
+			? wlFmt(wlI18n('removeWishlist', 'Remove %s from wishlist'), name)
+			: wlFmt(wlI18n('addWishlist', 'Add %s to wishlist'), name);
 	}
 
 	function wlSyncHearts() {
@@ -476,8 +488,9 @@
 		if (!wlItems.length) {
 			var shopUrl = wlPanel ? wlPanel.getAttribute('data-shop-url') : '';
 			wlPanelList.innerHTML =
-				'<p class="cdc-wishlist-empty">Your wishlist is empty.<br><span>Save your favourite displays and revisit them anytime.</span></p>' +
-				'<a class="cdc-btn cdc-btn-primary" href="' + wlEsc(shopUrl || '/shop/') + '">Browse the collection</a>';
+				'<p class="cdc-wishlist-empty">' + wlEsc(wlI18n('emptyTitle', 'Your wishlist is empty.')) +
+				'<br><span>' + wlEsc(wlI18n('emptySub', 'Save your favourite displays and revisit them anytime.')) + '</span></p>' +
+				'<a class="cdc-btn cdc-btn-primary" href="' + wlEsc(shopUrl || '/shop/') + '">' + wlEsc(wlI18n('browse', 'Browse the collection')) + '</a>';
 			return;
 		}
 		var html = '';
@@ -493,7 +506,7 @@
 				'<a class="cdc-wishlist-item-name" href="' + wlEsc(it.url || '#') + '">' + wlEsc(it.name) + '</a>' +
 				(it.price ? '<span class="cdc-wishlist-item-price">' + wlEsc(it.price) + '</span>' : '') +
 				'</div>' +
-				'<button type="button" class="cdc-wishlist-item-remove" data-id="' + it.id + '" aria-label="Remove from wishlist">&times;</button>' +
+				'<button type="button" class="cdc-wishlist-item-remove" data-id="' + it.id + '" aria-label="' + wlEsc(wlI18n('removeSaved', 'Remove from wishlist')) + '">&times;</button>' +
 				'</div>';
 		}
 		wlPanelList.innerHTML = html;
@@ -573,7 +586,7 @@
 		wlPersist();
 		wlSyncHearts();
 		wlRenderPanel();
-		wlAnnounce(idx > -1 ? 'Removed from wishlist' : 'Added to wishlist');
+		wlAnnounce(idx > -1 ? wlI18n('removed', 'Removed from wishlist') : wlI18n('added', 'Added to wishlist'));
 	}
 
 	document.addEventListener('click', function (e) {

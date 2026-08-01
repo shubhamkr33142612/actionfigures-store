@@ -590,9 +590,9 @@ class CDC_Demo_Importer {
 			imagestring( $im, 5, 40, 70, $spec['footer'], $fg );
 		}
 
-		$dir = wp_upload_dir();
+		$dir  = wp_upload_dir();
 		$path = trailingslashit( $dir['path'] ) . 'cdc-demo-' . sanitize_file_name( $slug ) . '.png';
-		imagepng( $im, $path );
+		imagepng( $im, $path, 9 );
 		imagedestroy( $im );
 		return $path;
 	}

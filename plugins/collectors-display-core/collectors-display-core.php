@@ -3,7 +3,7 @@
  * Plugin Name:       Collectors Display Core
  * Plugin URI:        https://actionfigures.local
  * Description:       Core business logic for the collectible display store. Owns product taxonomies, order handling, and product personalization so the theme stays a pure presentation layer.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Author:            Store Team
  * Text Domain:       collectors-display-core
  * Requires at least: 6.5
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CDC_VERSION', '0.1.0' );
+define( 'CDC_VERSION', '0.1.1' );
 define( 'CDC_PLUGIN_FILE', __FILE__ );
 define( 'CDC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CDC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
