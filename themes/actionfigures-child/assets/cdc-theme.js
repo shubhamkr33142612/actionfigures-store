@@ -231,7 +231,7 @@
 					var rx = (0.5 - py) * max;
 					var ry = (px - 0.5) * max;
 					el.style.transform =
-						'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateZ(0)';
+						'translateY(var(--cdc-reveal-y, 0px)) perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateZ(0)';
 					el.style.setProperty('--cdc-glare-x', (px * 100).toFixed(1) + '%');
 					el.style.setProperty('--cdc-glare-y', ((1 - py) * 100).toFixed(1) + '%');
 				});
@@ -394,6 +394,19 @@
 	/* ------------------------------------------------------------------ *
 	 * 9. Wishlist (localStorage-backed hearts + header panel)
 	 * ------------------------------------------------------------------ */
+	function wlSanitize(list) {
+		var seen = {};
+		var out = [];
+		for (var i = 0; i < list.length; i++) {
+			var item = list[i];
+			if (item && typeof item.id === 'string' && item.id && !seen[item.id]) {
+				seen[item.id] = 1;
+				out.push(item);
+			}
+		}
+		return out;
+	}
+
 	var WL_KEY = 'cdc_wishlist';
 	var wlItems = [];
 	try {
@@ -404,6 +417,7 @@
 	if (!Array.isArray(wlItems)) {
 		wlItems = [];
 	}
+	wlItems = wlSanitize(wlItems);
 
 	var wlToggle = document.getElementById('cdc-wishlist-toggle');
 	var wlPanel = document.getElementById('cdc-wishlist-panel');
@@ -614,6 +628,22 @@
 			wlTrapFocus(e);
 		});
 	}
+
+	window.addEventListener('storage', function (e) {
+		if (e.key === WL_KEY) {
+			try {
+				wlItems = JSON.parse(e.newValue) || [];
+			} catch (err) {
+				wlItems = [];
+			}
+			if (!Array.isArray(wlItems)) {
+				wlItems = [];
+			}
+			wlItems = wlSanitize(wlItems);
+			wlSyncHearts();
+			wlRenderPanel();
+		}
+	});
 
 	wlSyncHearts();
 	wlRenderPanel();

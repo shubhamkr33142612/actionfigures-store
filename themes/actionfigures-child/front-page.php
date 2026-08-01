@@ -242,10 +242,10 @@ foreach ( $cdc_marquee as $cdc_marquee_item ) {
 					</div>
 					<div class="cdc-banner-visual">
 						<?php if ( ! empty( $cdc_banner_products[0] ) ) : ?>
-							<div class="bimg"><?php echo wp_kses_post( $cdc_banner_products[0]->get_image( 'woocommerce_thumbnail', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?></div>
+							<div class="bimg"><?php echo wp_kses_post( $cdc_banner_products[0]->get_image( 'woocommerce_medium_large', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?></div>
 						<?php endif; ?>
 						<?php if ( ! empty( $cdc_banner_products[1] ) ) : ?>
-							<div class="bimg"><?php echo wp_kses_post( $cdc_banner_products[1]->get_image( 'woocommerce_thumbnail', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?></div>
+							<div class="bimg"><?php echo wp_kses_post( $cdc_banner_products[1]->get_image( 'woocommerce_medium_large', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?></div>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -364,7 +364,7 @@ foreach ( $cdc_marquee as $cdc_marquee_item ) {
 		array(
 			'limit'    => 9,
 			'status'   => 'publish',
-			'orderby'  => 'rand',
+			'orderby'  => 'date',
 			'order'    => 'DESC',
 		)
 	);
@@ -388,7 +388,7 @@ foreach ( $cdc_marquee as $cdc_marquee_item ) {
 						<div class="cdc-gallery-tile<?php echo 0 === $cdc_gi ? ' cdc-gallery-tile-featured' : ''; ?>" data-cdc-reveal>
 							<a class="cdc-gallery-link" href="<?php echo esc_url( $cdc_g_product->get_permalink() ); ?>" aria-label="<?php echo esc_attr( $cdc_g_product->get_name() ); ?>"></a>
 							<?php actionfigures_child_wishlist_button( $cdc_g_product ); ?>
-							<?php echo wp_kses_post( $cdc_g_product->get_image( 'woocommerce_thumbnail', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?>
+							<?php echo wp_kses_post( $cdc_g_product->get_image( 0 === $cdc_gi ? 'woocommerce_medium_large' : 'woocommerce_thumbnail', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?>
 							<div class="cdc-gallery-overlay">
 								<span class="cdc-gallery-cat"><?php echo wp_kses_post( wc_get_product_category_list( $cdc_g_product->get_id(), ', ' ) ); ?></span>
 								<span class="cdc-gallery-name"><?php echo esc_html( $cdc_g_product->get_name() ); ?></span>

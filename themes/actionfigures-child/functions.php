@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ACF_CHILD_VERSION', '1.0.5' );
+define( 'ACF_CHILD_VERSION', '1.0.6' );
 
 /**
  * Enqueue fonts and the child stylesheet after Astra's.
@@ -67,7 +67,7 @@ add_filter( 'wc_get_price_decimals', 'actionfigures_child_price_decimals' );
  */
 function actionfigures_child_cart_fragments( $fragments ) {
 	$count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
-	$fragments['span.cdc-cart-count'] = '<span class="cdc-cart-count">' . esc_html( $count ) . '</span>';
+	$fragments['span.cdc-cart-count'] = '<span class="cdc-count-badge cdc-cart-count" id="cdc-cart-count"' . ( $count > 0 ? '' : ' hidden' ) . '>' . esc_html( $count ) . '</span>';
 	return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'actionfigures_child_cart_fragments' );
