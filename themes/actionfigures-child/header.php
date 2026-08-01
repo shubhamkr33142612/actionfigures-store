@@ -68,7 +68,7 @@ $cdc_account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_perm
 		</div>
 	</div>
 
-	<header class="cdc-header" role="banner">
+	<header class="cdc-header">
 		<div class="cdc-container">
 			<a class="cdc-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<span class="cdc-brand-mark">AF</span>

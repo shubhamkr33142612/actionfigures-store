@@ -59,7 +59,7 @@ class CDC_Product_Data {
 
 		$tabs['cdc_specs'] = array(
 			'title'    => __( 'Dimensions & Details', 'collectors-display-core' ),
-			'priority' => 30,
+			'priority' => 25,
 			'callback' => array( __CLASS__, 'render_specs_tab' ),
 		);
 		return $tabs;

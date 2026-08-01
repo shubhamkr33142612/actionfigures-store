@@ -245,7 +245,8 @@ select:focus-visible {
 	transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
 }
 
-.cdc-nav li:hover > .sub-menu {
+.cdc-nav li:hover > .sub-menu,
+.cdc-nav li:focus-within > .sub-menu {
 	opacity: 1;
 	visibility: visible;
 	transform: translateY(0);
@@ -1220,6 +1221,10 @@ ul.products {
 	display: none;
 }
 
+.woocommerce ul.products li.product .ast-on-card-button {
+	display: none !important;
+}
+
 /* Custom .cdc-card-body structure (content-product.php) */
 .woocommerce ul.products li.product .cdc-card-body .woocommerce-loop-product__title {
 	padding: 0 0 8px;
@@ -1569,7 +1574,7 @@ ul.products {
 	transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.cdc-personalization input[type="text"]:focus {
+.cdc-personalization input[type="text"]:focus-visible {
 	border-color: var(--cdc-accent);
 	box-shadow: 0 0 0 3px rgba(161, 98, 7, 0.15);
 	outline: none;
@@ -1746,9 +1751,10 @@ ul.products {
 	font-size: 15px;
 }
 
-.woocommerce form .form-row input.input-text:focus,
-.woocommerce form .form-row textarea:focus {
+.woocommerce form .form-row input.input-text:focus-visible,
+.woocommerce form .form-row textarea:focus-visible {
 	border-color: var(--cdc-accent);
+	box-shadow: 0 0 0 3px rgba(161, 98, 7, 0.15);
 	outline: none;
 }
 
@@ -1763,7 +1769,7 @@ ul.products {
 }
 
 /* ------------------------------------------------------------------ *
- * 17. Motion & 3D effects
+ * 18. Motion & 3D effects
  * ------------------------------------------------------------------ */
 
 /* Scroll progress bar */
@@ -2123,7 +2129,7 @@ html.cdc-anim [data-cdc-reveal="slide-left"] {
 }
 
 /* ------------------------------------------------------------------ *
- * 18. Wishlist + collector gallery
+ * 19. Wishlist + collector gallery
  * ------------------------------------------------------------------ */
 
 /* Stretched card links (keep the whole card clickable) */
@@ -2440,7 +2446,7 @@ html.cdc-anim [data-cdc-reveal="slide-left"] {
 }
 
 /* ------------------------------------------------------------------ *
- * 19. Responsive
+ * 20. Responsive
  * ------------------------------------------------------------------ */
 @media (max-width: 1024px) {
 	.cdc-grid,

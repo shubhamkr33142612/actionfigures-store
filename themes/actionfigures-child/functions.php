@@ -12,7 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ACF_CHILD_VERSION', '1.0.7' );
+define( 'ACF_CHILD_VERSION', '1.0.8' );
+
+/**
+ * Make the child theme's strings translatable via a languages folder.
+ */
+function actionfigures_child_setup() {
+	load_child_theme_textdomain( 'actionfigures-child' );
+}
+add_action( 'after_setup_theme', 'actionfigures_child_setup' );
 
 /**
  * Enqueue fonts and the child stylesheet after Astra's.
@@ -97,6 +105,30 @@ function actionfigures_child_shop_toolbar() {
 add_action( 'init', 'actionfigures_child_shop_toolbar' );
 
 /**
+ * Own the shop loop card markup.
+ *
+ * Astra injects its thumbnail wrapper and a second title/price/button
+ * summary (astra_woo_woocommerce_shop_product_content) into every loop
+ * card, which duplicates the title/price and bypasses the .cdc-card-body
+ * layout in content-product.php. Run after Astra's shop_customization
+ * (wp:5) and neutralize just the conflicting pieces; checkout behaviour
+ * and sale/out-of-stock badges stay untouched.
+ */
+function actionfigures_child_own_shop_card() {
+	if ( is_admin() ) {
+		return;
+	}
+	remove_action( 'woocommerce_before_shop_loop_item', 'astra_woo_shop_thumbnail_wrap_start', 6 );
+	remove_action( 'woocommerce_after_shop_loop_item', 'astra_woo_shop_thumbnail_wrap_end', 8 );
+	remove_action( 'woocommerce_after_shop_loop_item', 'astra_woo_woocommerce_shop_product_content' );
+	// Astra also strips the WooCommerce defaults for loop title/price
+	// (woocommerce_init) so the card body would stay empty.
+	add_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10 );
+	add_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_price', 10 );
+}
+add_action( 'wp', 'actionfigures_child_own_shop_card', 20 );
+
+/**
  * Lightweight SEO + Open Graph tags (no SEO plugin installed).
  */
 function actionfigures_child_head_meta() {
@@ -140,7 +172,7 @@ function actionfigures_child_head_meta() {
 	}
 	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
 }
-	add_action( 'wp_head', 'actionfigures_child_head_meta', 5 );
+add_action( 'wp_head', 'actionfigures_child_head_meta', 5 );
 
 /**
  * Data attributes that seed the client-side wishlist for a product.

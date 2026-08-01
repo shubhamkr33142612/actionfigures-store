@@ -160,7 +160,7 @@ class CDC_Personalization {
 		$placeholder = isset( $_POST['_cdc_personalization_placeholder'] ) ? sanitize_text_field( wp_unslash( $_POST['_cdc_personalization_placeholder'] ) ) : '';
 		update_post_meta( $post_id, '_cdc_personalization_placeholder', $placeholder );
 
-		$max = isset( $_POST['_cdc_personalization_max_length'] ) ? max( 1, (int) $_POST['_cdc_personalization_max_length'] ) : 40;
+		$max = isset( $_POST['_cdc_personalization_max_length'] ) ? max( 1, min( 200, (int) $_POST['_cdc_personalization_max_length'] ) ) : 40;
 		update_post_meta( $post_id, '_cdc_personalization_max_length', $max );
 
 		$fee = isset( $_POST['_cdc_personalization_fee'] ) ? max( 0, (float) $_POST['_cdc_personalization_fee'] ) : 0;
@@ -193,6 +193,7 @@ class CDC_Personalization {
 				maxlength="<?php echo esc_attr( $config['max_length'] ); ?>"
 				placeholder="<?php echo esc_attr( $config['placeholder'] ); ?>"
 				autocomplete="off"
+				<?php echo $required; // phpcs:ignore WordPress.Security.EscapeOutput -- hardcoded ' required'. ?>
 			/>
 			<span class="cdc-count">0/<?php echo esc_html( $config['max_length'] ); ?></span>
 			<?php if ( $config['fee'] > 0 ) : ?>
@@ -229,6 +230,13 @@ class CDC_Personalization {
 			array(),
 			CDC_VERSION,
 			true
+		);
+		wp_localize_script(
+			'cdc-personalization',
+			'cdcPersonalizationI18n',
+			array(
+				'requiredText' => __( 'Please enter personalized text.', 'collectors-display-core' ),
+			)
 		);
 	}
 

@@ -50,6 +50,12 @@
 			}
 		});
 
+		window.addEventListener('resize', function () {
+			if (window.innerWidth >= 1024 && drawer.classList.contains('open')) {
+				closeDrawer();
+			}
+		});
+
 		var links = drawer.querySelectorAll('a');
 		Array.prototype.forEach.call(links, function (link) {
 			link.addEventListener('click', closeDrawer);
@@ -400,8 +406,8 @@
 		var out = [];
 		for (var i = 0; i < list.length; i++) {
 			var item = list[i];
-			if (item && typeof item.id === 'string' && item.id && !seen[item.id]) {
-				seen[item.id] = 1;
+			if (item && item.id != null && (typeof item.id === 'number' || typeof item.id === 'string') && !seen[String(item.id)]) {
+				seen[String(item.id)] = 1;
 				out.push(item);
 			}
 		}
@@ -506,7 +512,7 @@
 				'<a class="cdc-wishlist-item-name" href="' + wlEsc(it.url || '#') + '">' + wlEsc(it.name) + '</a>' +
 				(it.price ? '<span class="cdc-wishlist-item-price">' + wlEsc(it.price) + '</span>' : '') +
 				'</div>' +
-				'<button type="button" class="cdc-wishlist-item-remove" data-id="' + it.id + '" aria-label="' + wlEsc(wlI18n('removeSaved', 'Remove from wishlist')) + '">&times;</button>' +
+				'<button type="button" class="cdc-wishlist-item-remove" data-id="' + wlEsc(it.id) + '" aria-label="' + wlEsc(wlI18n('removeSaved', 'Remove from wishlist')) + '">&times;</button>' +
 				'</div>';
 		}
 		wlPanelList.innerHTML = html;

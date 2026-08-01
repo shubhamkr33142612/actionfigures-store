@@ -20,7 +20,7 @@ astra_content_after();
 astra_footer_before();
 ?>
 
-<footer class="cdc-footer" role="contentinfo">
+<footer class="cdc-footer">
 	<div class="cdc-container">
 		<div class="cdc-footer-top">
 			<div class="cdc-footer-brand">

@@ -223,7 +223,7 @@ foreach ( $cdc_marquee as $cdc_marquee_item ) {
 					<div class="cdc-showcase-stack">
 						<?php foreach ( array_slice( $cdc_featured, 0, 3 ) as $product ) : ?>
 							<div class="cdc-stack-card">
-								<?php echo wp_kses_post( $product->get_image( 'woocommerce_single', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?>
+								<?php echo wp_kses_post( $product->get_image( 'woocommerce_medium_large', array( 'loading' => 'lazy', 'decoding' => 'async' ) ) ); ?>
 								<span class="cdc-stack-label"><?php echo esc_html( $product->get_name() ); ?></span>
 							</div>
 						<?php endforeach; ?>

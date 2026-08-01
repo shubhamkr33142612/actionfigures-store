@@ -27,7 +27,7 @@
 					if (input.value.trim() === '') {
 						e.preventDefault();
 						input.focus();
-						input.setCustomValidity('Please enter personalized text.');
+						input.setCustomValidity((window.cdcPersonalizationI18n && window.cdcPersonalizationI18n.requiredText) || 'Please enter personalized text.');
 						input.reportValidity();
 					} else {
 						input.setCustomValidity('');
